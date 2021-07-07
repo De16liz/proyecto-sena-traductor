@@ -36,6 +36,8 @@ CREATE TABLE tb_vocabularios
 
 -- FUNCIONES
 
+-- Funcion de insertar palabras.
+
 DROP FUNCTION IF EXISTS fun_agregar_palabra;
 delimiter //
 CREATE FUNCTION fun_agregar_palabra( v_palabra NVARCHAR(50), v_idioma TINYINT)
