@@ -82,6 +82,18 @@ BEGIN
 END //
 delimiter ;
 
+-- vista
+
+DROP TABLE IF EXISTS vista_traductor;
+
+CREATE VIEW vista_traductor    
+AS 
+SELECT COUNT( * ) AS conteo, t1.palabra, t2.idioma
+from tb_palabras t1, tb_idiomas t2
+WHERE t1.id = t2.id
+GROUP BY t2.idioma, t1.palabra ;
+
+
 
 
 
