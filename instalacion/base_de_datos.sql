@@ -12,9 +12,10 @@ CREATE TABLE tb_palabras
 DROP TABLE IF EXISTS tb_idiomas;
 CREATE TABLE tb_idiomas
 (
-    id TINYINT PRIMARY KEY AUTO_INCREMENT,
+    id TINYINT PRIMARY KEY,
     idioma NVARCHAR(15) NOT NULL 
 );
+INSERT tb_idiomas VALUES('1', 'ESPAÑOL'),('2','TUCANO'); -- Insertar datos por defecto
 
 DROP TABLE IF EXISTS tb_traducciones;
 CREATE TABLE tb_traduccion
@@ -81,6 +82,29 @@ BEGIN
 	END if;
 END //
 delimiter ;
+
+-- Agregar vocabulario.
+DROP FUNCTION IF EXISTS fu_agregar_vocabulario;
+DELIMITER //
+CREATE FUNCTION fu_agregar_vocabulario(p_frase VARCHAR(200), p_frase_idioma TINYINT, p_traduccion VARCHAR(200), p_traduccion_idioma TINYINT)
+RETURNS BIT
+BEGIN
+	DECLARE v1 BIT;
+	
+	SET v1 = IF ((SELECT COUNT(*) FROM tb_vocabularios t1  WHERE t1.frase = p_frase AND t1.frase_idioma = p_frase_idioma) = 0,1,0);
+	
+	IF (v1 = 1) THEN
+		INSERT INTO tb_vocabularios(frase, frase_idioma, traduccion, traduccion_idioma)
+		VALUES(p_frase, p_frase_idioma, p_traduccion, p_traduccion_idioma);
+		RETURN 1;
+	ELSE 
+		RETURN 0;
+	END IF;
+END //
+DELIMITER ;
+
+
+
 
 -- vista
 
