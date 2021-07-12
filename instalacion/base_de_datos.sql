@@ -26,7 +26,7 @@ CREATE TABLE tb_vocabularios
     frase_idioma TINYINT NOT NULL, -- llave foranea.
     traduccion  NVARCHAR(200) NOT NULL,
     traduccion_idioma TINYINT NOT NULL, -- llave foranea.
-	signifcado VARCHAR(300) NOT NULL
+	significado VARCHAR(300) NOT NULL
 );
 
 -- FUNCIONES
@@ -34,14 +34,14 @@ CREATE TABLE tb_vocabularios
 -- Funcion de insertar palabras.
 DROP FUNCTION IF EXISTS fun_agregar_palabra;
 DELIMITER //
-CREATE FUNCTION fun_agregar_palabra(p_palabra VARCHAR(60), p_palabra_idioma TINYINT, p_traduccion VARCHAR(60), p_traduccion_idioma TINYINT)
+CREATE FUNCTION fun_agregar_palabra(p_palabra VARCHAR(60), p_palabra_idioma TINYINT, p_traduccion VARCHAR(60), p_traduccion_idioma TINYINT, p_significado VARCHAR(300))
 RETURNS BIT
 BEGIN 
 	DECLARE v BIT;
 	SET v = IF((SELECT COUNT(*) FROM tb_diccionario t1 WHERE t1.palabra = p_palabra AND t1.palabra_idioma = p_palabra_idioma) = 0, 1, 0);
 	IF (v = 1) then
-		INSERT INTO tb_diccionario(palabra, palabra_idioma, traduccion, traduccion_idioma)
-		VALUES(UPPER(p_palabra), p_palabra_idioma, UPPER(p_traduccion), p_traduccion_idioma); 
+		INSERT INTO tb_diccionario(palabra, palabra_idioma, traduccion, traduccion_idioma, significado)
+		VALUES(UPPER(p_palabra), p_palabra_idioma, UPPER(p_traduccion), p_traduccion_idioma, p_significado); 
 		RETURN 1;
 	ELSE
 		RETURN 0;
@@ -52,7 +52,7 @@ DELIMITER ;
 -- Agregar vocabulario.
 DROP FUNCTION IF EXISTS fun_agregar_vocabulario;
 DELIMITER //
-CREATE FUNCTION fun_agregar_vocabulario(p_frase VARCHAR(200), p_frase_idioma TINYINT, p_traduccion VARCHAR(200), p_traduccion_idioma TINYINT)
+CREATE FUNCTION fun_agregar_vocabulario(p_frase VARCHAR(200), p_frase_idioma TINYINT, p_traduccion VARCHAR(200), p_traduccion_idioma TINYINT, p_significado VARCHAR(300))
 RETURNS BIT
 BEGIN
 	DECLARE v1 BIT;
@@ -60,8 +60,8 @@ BEGIN
 	SET v1 = IF ((SELECT COUNT(*) FROM tb_vocabularios t1  WHERE t1.frase = p_frase AND t1.frase_idioma = p_frase_idioma) = 0,1,0);
 	
 	IF (v1 = 1) THEN
-		INSERT INTO tb_vocabularios(frase, frase_idioma, traduccion, traduccion_idioma)
-		VALUES(UPPER(p_frase), p_frase_idioma, UPPER(p_traduccion), p_traduccion_idioma);
+		INSERT INTO tb_vocabularios(frase, frase_idioma, traduccion, traduccion_idioma, significado)
+		VALUES(UPPER(p_frase), p_frase_idioma, UPPER(p_traduccion), p_traduccion_idioma, p_significado);
 		RETURN 1;
 	ELSE 
 		RETURN 0;
