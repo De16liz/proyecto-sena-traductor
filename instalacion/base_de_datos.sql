@@ -80,6 +80,14 @@ WHERE t1.id
 
 GROUP BY t1.palabra, t1.traduccion ;
 
+-- vista vocabulario
+CREATE VIEW vista_vocabulario    
+AS 
+SELECT COUNT( * ) AS conteo, t1.frase, t1.traduccion, t1.significado
+from tb_vocabularios t1
+WHERE t1.id 
+GROUP BY t1.frase, t1.traduccion,t1.significado ;
+
 
 
 
