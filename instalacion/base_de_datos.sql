@@ -29,6 +29,40 @@ CREATE TABLE tb_vocabularios
 	significado VARCHAR(300) NOT NULL
 );
 
+
+
+
+ALTER TABLE tb_diccionario
+ADD INDEX palabra_idioma_idx(palabra_idioma),
+ADD INDEX traduccion_idioma_idx(traduccion_idioma),
+ADD CONSTRAINT fk_diccionario_palabra_idiomas
+FOREIGN KEY(palabra_idioma)
+REFERENCES tb_idiomas(id)
+ON UPDATE CASCADE
+ON DELETE RESTRICT,
+ADD CONSTRAINT fk_diccionario_traduccion_idiomas
+FOREIGN KEY(traduccion_idioma)
+REFERENCES tb_idiomas(id)
+ON UPDATE CASCADE
+ON DELETE RESTRICT
+
+ALTER TABLE tb_vocabularios
+ADD INDEX frase_idioma_idx(frase_idioma),
+ADD INDEX truduccion_idioma_idx(traduccion_idioma),
+ADD CONSTRAINT fk_vocabulario_frase_idiomas
+FOREIGN KEY(frase_idioma)
+REFERENCES tb_idiomas(id)
+ON UPDATE CASCADE
+ON DELETE RESTRICT,
+ADD CONSTRAINT fk_vocabulario_traduccion_idiomas
+FOREIGN KEY(traduccion_idioma)
+REFERENCES tb_idiomas(id)
+ON UPDATE CASCADE
+ON DELETE RESTRICT
+
+
+
+
 -- FUNCIONES
 
 -- Funcion de insertar palabras.
