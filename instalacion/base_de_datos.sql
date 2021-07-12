@@ -18,7 +18,7 @@ CREATE TABLE tb_idiomas
 INSERT tb_idiomas VALUES('1', 'ESPAÑOL'),('2','TUCANO'); -- Insertar datos por defecto
 
 DROP TABLE IF EXISTS tb_traducciones;
-CREATE TABLE tb_traduccion
+CREATE TABLE tb_traducciones
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_palabra INT NOT NULL,  -- llave foranea.
