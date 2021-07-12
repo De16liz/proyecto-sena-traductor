@@ -69,6 +69,17 @@ BEGIN
 END //
 DELIMITER ;
 
+-- VISTAS
+
+-- vista diccionario
+CREATE VIEW vista_diccionario    
+AS 
+SELECT COUNT( * ) AS conteo, t1.palabra, t1.traduccion
+from tb_diccionario t1
+WHERE t1.id 
+
+GROUP BY t1.palabra, t1.traduccion ;
+
 
 
 
