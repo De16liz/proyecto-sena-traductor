@@ -95,7 +95,7 @@ BEGIN
 	
 	IF (v1 = 1) THEN
 		INSERT INTO tb_vocabularios(frase, frase_idioma, traduccion, traduccion_idioma)
-		VALUES(p_frase, p_frase_idioma, p_traduccion, p_traduccion_idioma);
+		VALUES(UPPER(p_frase), p_frase_idioma, UPPER(p_traduccion), p_traduccion_idioma);
 		RETURN 1;
 	ELSE 
 		RETURN 0;
